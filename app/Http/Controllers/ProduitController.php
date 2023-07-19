@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Produit;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Produit;
 
 class ProduitController extends Controller
 {
@@ -14,14 +13,30 @@ class ProduitController extends Controller
     public function index()
     {
         //
+        $produit = Produit::all();
+        return response()->json($produit);
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProduitRequest $request)
     {
         //
+        $produit = Produit::create([
+            'image' => $this->image,
+            'description' => $this->description,
+            'libelle' => $this->libelle,
+            'categorie' => $this->categorie,
+            'prix' => $this->prix,
+            'etatProduit' => $this->etatProduit,
+            'quantiteStock' => $this->quantiteStock,
+            'lignCommande_id' => $this->lignCommande_id,
+            'user_id' => $this->user_id,
+        ]);
+        return new ProduitRequest($produit);
+
     }
 
     /**
@@ -30,14 +45,29 @@ class ProduitController extends Controller
     public function show(Produit $produit)
     {
         //
+        return $produit;
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Produit $produit)
+    public function update(ZoneRequest $request, Produit $produit)
     {
         //
+        $produit->update([
+            'image' => $this->image,
+            'description' => $this->description,
+            'libelle' => $this->libelle,
+            'categorie' => $this->categorie,
+            'prix' => $this->prix,
+            'etatProduit' => $this->etatProduit,
+            'quantiteStock' => $this->quantiteStock,
+            'lignCommande_id' => $this->lignCommande_id,
+            'user_id' => $this->user_id,
+        ]);
+        return new ProduitResource($produit);
+
     }
 
     /**
@@ -46,5 +76,7 @@ class ProduitController extends Controller
     public function destroy(Produit $produit)
     {
         //
+        $produit->delete();
+
     }
 }

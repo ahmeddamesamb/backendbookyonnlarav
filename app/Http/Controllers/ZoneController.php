@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Zone;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreZoneRequest;
+use App\Http\Requests\UpdateZoneRequest;
+use App\Models\Zone;
 
 class ZoneController extends Controller
 {
@@ -14,14 +15,24 @@ class ZoneController extends Controller
     public function index()
     {
         //
+//
+        $zone = Zone::all();
+        return response()->json($zone);
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreZoneRequest $request)
     {
         //
+        $zone = Zone::create([
+            'nom' => $request->nom,
+            'coutLivraison' => $request->coutLivraison,
+            'etatZone' => $request->etatZone,
+        ]);
+        return new StoreZoneRequest($zone);
     }
 
     /**
@@ -30,14 +41,23 @@ class ZoneController extends Controller
     public function show(Zone $zone)
     {
         //
+        return $zone;
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Zone $zone)
+    public function update(UpdateZoneRequest $request, Zone $zone)
     {
         //
+        $zone->update([
+            'nom' => $request->nom,
+            'coutLivraison' => $request->coutLivraison,
+            'etatZone' => $request->etatZone,
+        ]);
+        return new UserResource($zone);
+
     }
 
     /**
@@ -46,5 +66,7 @@ class ZoneController extends Controller
     public function destroy(Zone $zone)
     {
         //
+        $zone->delete();
+
     }
 }

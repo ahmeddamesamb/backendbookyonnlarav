@@ -11,17 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('produits', function (Blueprint $table) {
+        Schema::create('commandes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('image');
-            $table->string('description');
-            $table->string('libelle');
-            $table->string('categorie');
-            $table->integer('prix');
-            $table->boolean('etatProduit');
-            $table->string('quantiteStock');
+            $table->string('etatCommande');
+            $table->string('numeroCommande');
+            $table->string('statutCommande');
+            $table->integer('paiement');
             $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('zone_id')->constrained('zones');
 
         });
     }
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('produits');
+        Schema::dropIfExists('commandes');
     }
 };

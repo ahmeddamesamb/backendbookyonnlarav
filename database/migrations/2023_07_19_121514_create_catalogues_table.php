@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('livraisons', function (Blueprint $table) {
+        Schema::create('catalogues', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('telephoneLivraison');
-            $table->boolean('etatLivraison');
-            $table->foreignId('zone_id')->constrained('zones');
-
         });
     }
 
@@ -26,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('livraisons');
+        Schema::dropIfExists('catalogues');
     }
 };

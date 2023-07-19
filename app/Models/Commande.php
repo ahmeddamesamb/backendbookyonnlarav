@@ -13,6 +13,23 @@ class Commande extends Model
         'numeroCommande',
         'statutCommande',
         'paiement',
+        'user_id',
+        'zone_id',
+        'lignCommande_id',
 
     ];
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function lignCommande(): BelongsTo
+    {
+        return $this->belongsTo(lignCommande::class);
+    }
+
+    public function zone(): BelongsTo
+    {
+        return $this->belongsTo(Zone::class);
+    }
 }

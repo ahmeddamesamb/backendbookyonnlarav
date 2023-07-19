@@ -48,8 +48,22 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    public function role(): HasOne
+    public function role(): BelongsTo
     {
-        return $this->hasOne(Role::class);
+        return $this->belongsTo(Role::class);
+    }
+
+    public function produits(): HasMany
+    {
+        return $this->hasMany(Produit::class);
+    }
+    public function commandes(): HasMany
+    {
+        return $this->hasMany(Commade::class);
+    }
+
+    public function lignCommandes(): HasMany
+    {
+        return $this->hasMany(lignCommande::class);
     }
 }

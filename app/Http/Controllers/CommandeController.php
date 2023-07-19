@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Commande;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Commande;
 
 class CommandeController extends Controller
 {
@@ -14,14 +13,27 @@ class CommandeController extends Controller
     public function index()
     {
         //
+        $commande = Commande::all();
+        return response()->json($commande);
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CommandeRequest $request)
     {
         //
+        $commande = Commande::create([
+            'etatCommande' => $this->etatCommande,
+            'numeroCommande' => $this->numeroCommande,
+            'statutCommande' => $this->statutCommande,
+            'paiement' => $this->paiement,
+            'user_id' => $this->user_id,
+            'zone_id' => $this->zone_id,
+            'lignCommande_id' => $this->lignCommande_id,
+        ]);
+        return new StoreZoneRequest($commande);
     }
 
     /**
@@ -30,14 +42,27 @@ class CommandeController extends Controller
     public function show(Commande $commande)
     {
         //
+        return $commande;
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Commande $commande)
+    public function update(CommandeResource $request, Commande $commande)
     {
         //
+        $commande->update([
+            'etatCommande' => $this->etatCommande,
+            'numeroCommande' => $this->numeroCommande,
+            'statutCommande' => $this->statutCommande,
+            'paiement' => $this->paiement,
+            'user_id' => $this->user_id,
+            'zone_id' => $this->zone_id,
+            'lignCommande_id' => $this->lignCommande_id,
+        ]);
+        return new CommandeResource($commande);
+
     }
 
     /**
@@ -46,5 +71,7 @@ class CommandeController extends Controller
     public function destroy(Commande $commande)
     {
         //
+        $commande->delete();
+
     }
 }

@@ -14,4 +14,12 @@ class Zone extends Model
         'etatZone',
 
     ];
+    public function commandes(): HasMany
+    {
+        return $this->hasMany(Commade::class);
+    }
+    public function livraison(): HasMany
+    {
+        return $this->hasMany(livraison::class);
+    }
 }

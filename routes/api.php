@@ -19,8 +19,16 @@ Route::post('/login', [
     AuthController::class, 'login',
 ]);
 Route::apiResource('/user',
-    UserController::class,);
-
+    UserController::class, );
+Route::apiResource('/commande',
+    CommandeController::class, );
+Route::apiResource('/livraison',
+    LivraisonController::class, );
+Route::apiResource('/livraison',
+    ZoneController::class, );
+Route::apiResource('/catalogue',
+    CatalogueController::class, );
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+
 });

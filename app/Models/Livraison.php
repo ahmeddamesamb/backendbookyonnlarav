@@ -11,5 +11,11 @@ class Livraison extends Model
     protected $fillable = [
         'telephoneLivraison',
         'etatLivraison',
+        'zone_id',
+
     ];
+    public function zone(): BelongsTo
+    {
+        return $this->belongsTo(Zone::class);
+    }
 }
