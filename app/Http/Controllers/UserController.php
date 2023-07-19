@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class UserController extends Controller
@@ -22,16 +23,8 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
-        $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-            'telephone' => 'required|string',
-
-        ]);
 
         $user = User::create([
             'name' => $request->name,
@@ -43,8 +36,7 @@ class UserController extends Controller
             'matriculeMoto' => 'MAT_' . Str::random(),
             'role_id' => $request->role_id,
         ]);
-        dd($user);
-        return response()->json($user);
+        return new UserResource($user);
 
     }
 
@@ -60,9 +52,20 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(UserRequest $request, User $user)
     {
         //
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'telephone' => $request->telephone,
+            'is_enable' => true,
+            'etatLivreur' => true,
+            'matriculeMoto' => 'MAT_' . Str::random(),
+            'role_id' => $request->role_id,
+        ]);
+        return new UserResource($user);
     }
 
     /**

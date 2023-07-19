@@ -16,6 +16,17 @@ class Produit extends Model
         'prix',
         'etatProduit',
         'quantiteStock',
+        'lignCommande_id',
+        'user_id',
 
     ];
+
+    public function lignCommande(): BelongsTo
+    {
+        return $this->belongsTo(lignCommande::class);
+    }
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(Users::class);
+    }
 }

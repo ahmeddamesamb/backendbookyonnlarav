@@ -12,4 +12,13 @@ class LigneCommande extends Model
         'quantite',
         'prix',
     ];
+
+    public function commandes(): HasMany
+    {
+        return $this->hasMany(Commade::class);
+    }
+    public function produits(): HasMany
+    {
+        return $this->hasMany(Produit::class);
+    }
 }

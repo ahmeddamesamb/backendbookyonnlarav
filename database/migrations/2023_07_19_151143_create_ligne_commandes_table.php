@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('commandes', function (Blueprint $table) {
+        Schema::create('ligne_commandes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->foreignId('commande_id')->constrained('commandes');
+            $table->foreignId('produit_id')->constrained('produits');
+
         });
     }
 
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('commandes');
+        Schema::dropIfExists('ligne_commandes');
     }
 };

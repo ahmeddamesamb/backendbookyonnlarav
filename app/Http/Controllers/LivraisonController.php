@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Livraison;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Livraison;
 
 class LivraisonController extends Controller
 {
@@ -14,14 +13,24 @@ class LivraisonController extends Controller
     public function index()
     {
         //
+        $livraison = Zone::all();
+        return response()->json($livraison);
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(LivraisonRequest $request)
     {
         //
+        $livraison = Livraison::create([
+            'telephoneLivraison' => $this->telephoneLivraison,
+            'etatLivraison' => $this->etatLivraison,
+            'zone_id' => $this->zoneId,
+        ]);
+        return new LivraisonRequest($livraison);
+
     }
 
     /**
@@ -30,14 +39,23 @@ class LivraisonController extends Controller
     public function show(Livraison $livraison)
     {
         //
+        return $livraison;
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Livraison $livraison)
+    public function update(LivraisonRequest $request, Livraison $livraison)
     {
         //
+        $livraison->update([
+            'telephoneLivraison' => $this->telephoneLivraison,
+            'etatLivraison' => $this->etatLivraison,
+            'zone_id' => $this->zoneId,
+        ]);
+        return new LivraisonResource($livraison);
+
     }
 
     /**
@@ -46,5 +64,7 @@ class LivraisonController extends Controller
     public function destroy(Livraison $livraison)
     {
         //
+        $livraison->delete();
+
     }
 }
