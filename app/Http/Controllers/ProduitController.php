@@ -14,13 +14,14 @@ class ProduitController extends Controller
     {
         //
         $produit = Produit::all();
-        return response()->json(
-
-            [
-                'produit' => $produit,
-                "message" => "produit recuperer  avec succes",
+        if ($produit !== null) {
+            return response()->json(['produit' => ProduitResource::collection($produit),
+                "message" => "zone recuperer  avec succes",
 
             ], 200);
+        }
+        return response()->json([
+            "message" => "error lors de la recuperation produit"], 401);
 
     }
 
@@ -30,20 +31,13 @@ class ProduitController extends Controller
     public function store(ProduitRequest $request)
     {
         //
-        $produit = Produit::create([
-            'image' => $this->image,
-            'description' => $this->description,
-            'libelle' => $this->libelle,
-            'categorie' => $this->categorie,
-            'prix' => $this->prix,
-            'etatProduit' => $this->etatProduit,
-            'quantiteStock' => $this->quantiteStock,
-            'lignCommande_id' => $this->lignCommande_id,
-            'user_id' => $this->user_id,
+        $produit = Produit::create($request->validated());
+        if ($produit !== null) {
+            return new ProduitResource($produit);
 
-        ], 200);
-        return new ProduitRequest($produit);
-
+        }
+        return response()->json([
+            "message" => "error lors de l'insertion du produit"], 401);
     }
 
     /**
@@ -62,17 +56,7 @@ class ProduitController extends Controller
     public function update(ZoneRequest $request, Produit $produit)
     {
         //
-        $produit->update([
-            'image' => $this->image,
-            'description' => $this->description,
-            'libelle' => $this->libelle,
-            'categorie' => $this->categorie,
-            'prix' => $this->prix,
-            'etatProduit' => $this->etatProduit,
-            'quantiteStock' => $this->quantiteStock,
-            'lignCommande_id' => $this->lignCommande_id,
-            'user_id' => $this->user_id,
-        ], 200);
+        $produit->update($request->validated());
         return new ProduitResource($produit);
 
     }

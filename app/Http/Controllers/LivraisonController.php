@@ -13,13 +13,14 @@ class LivraisonController extends Controller
     public function index()
     {
         //
-        $livraison = Zone::all();
+        $livraison = Livraison::all();
+        if ($livraison !== null) {
+            return response()->json(['livraison' => LivraisonResource::collection($livraison),
+                "message" => "livraison recuperer  avec succes",
+
+            ], 200);}
         return response()->json([
-            'livraison' => $livraison,
-            "message" => "livraison recuperer  avec succes",
-
-        ],200);
-
+            "message" => "error lors de la recuperation livraison"], 401);
     }
 
     /**
@@ -28,12 +29,13 @@ class LivraisonController extends Controller
     public function store(LivraisonRequest $request)
     {
         //
-        $livraison = Livraison::create([
-            'telephoneLivraison' => $this->telephoneLivraison,
-            'etatLivraison' => $this->etatLivraison,
-            'zone_id' => $this->zoneId,
-        ],200);
-        return new LivraisonRequest($livraison);
+        $livraison = Livraison::create($request->validated());
+        if ($livraison !== null) {
+            return new LivraisonResource($livraison);
+
+        }
+        return response()->json([
+            "message" => "error lors de l'insertion du livraison"], 401);
 
     }
 
@@ -53,12 +55,13 @@ class LivraisonController extends Controller
     public function update(LivraisonRequest $request, Livraison $livraison)
     {
         //
-        $livraison->update([
-            'telephoneLivraison' => $this->telephoneLivraison,
-            'etatLivraison' => $this->etatLivraison,
-            'zone_id' => $this->zoneId,
-        ],200);
-        return new LivraisonResource($livraison);
+        $livraison->update($request->validated());
+        if ($livraison !== null) {
+            return new LivraisonResource($livraison);
+
+        }
+        return response()->json([
+            "message" => "error lors de l'insertion du livraison"], 401);
 
     }
 

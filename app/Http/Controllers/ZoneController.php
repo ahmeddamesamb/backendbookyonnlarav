@@ -17,11 +17,15 @@ class ZoneController extends Controller
         //
 //
         $zone = Zone::all();
-        return response()->json([
-            'zone' => $zone,
-            "message" => "zone recuperer  avec succes",
+        if ($zone !== null) {
+            return response()->json([
+                'zone' => ZoneResource::collection($zone),
+                "message" => "zone recuperer  avec succes",
 
-        ],200);
+            ], 200);
+        }
+        return response()->json([
+            "message" => "error lors de la recuperation"], 401);
 
     }
 
@@ -31,12 +35,12 @@ class ZoneController extends Controller
     public function store(StoreZoneRequest $request)
     {
         //
-        $zone = Zone::create([
-            'nom' => $request->nom,
-            'coutLivraison' => $request->coutLivraison,
-            'etatZone' => $request->etatZone,
-        ], 200);
-        return new StoreZoneRequest($zone);
+        $zone = Zone::create($request->validated());
+        if ($zone !== null) {
+            return new ZoneResource($zone);
+        }
+        return response()->json([
+            "message" => "error lors de l'insertion de la zone"], 401);
     }
 
     /**
@@ -55,12 +59,13 @@ class ZoneController extends Controller
     public function update(UpdateZoneRequest $request, Zone $zone)
     {
         //
-        $zone->update([
-            'nom' => $request->nom,
-            'coutLivraison' => $request->coutLivraison,
-            'etatZone' => $request->etatZone,
-        ], 200);
-        return new UserResource($zone);
+        $zone->update($request->validated());
+        if ($zone !== null) {
+            return new ZoneResource($zone);
+
+        }
+        return response()->json([
+            "message" => "error lors de l'insertion du zone"], 401);
 
     }
 

@@ -23,6 +23,9 @@ class UpdateZoneRequest extends FormRequest
     {
         return [
             //
+            'nom' => 'required|string',
+            'coutLivraison' => 'required|string|email',
+            'etatZone' => 'required|string',
         ];
     }
 }

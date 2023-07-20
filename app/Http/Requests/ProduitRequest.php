@@ -11,7 +11,7 @@ class ProduitRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,6 +23,15 @@ class ProduitRequest extends FormRequest
     {
         return [
             //
+            'image'=>'required|string',
+            'description'=>'required|string',
+            'libelle'=>'required|string',
+            'categorie'=>'required|string',
+            'prix'=>'required|integer',
+            'etatProduit'=>'required',
+            'quantiteStock'=>'required',
+            'lignCommande_id'=>'required',
+            'user_id'=>'required',
         ];
     }
 }

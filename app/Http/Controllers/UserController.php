@@ -17,11 +17,16 @@ class UserController extends Controller
     {
         //
         $user = User::all();
-        return response()->json([
-            'user' => $user,
-            "message" => "user recuperer  avec succes",
+        if ($user !== null) {
+            return response()->json([
+                'user' => UserResource::collection($user),
+                "message" => "user recuperer  avec succes",
 
-        ], 200);
+            ], 200);
+        }
+        return response()->json([
+            "message" => "error lors de la recuperation user"], 401);
+
     }
 
     /**
@@ -29,18 +34,18 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
-            'telephone' => $request->telephone,
-            'is_enable' => true,
+        $ajout = array_merge($request->validated(), ['is_enable' => true,
             'etatLivreur' => true,
             'matriculeMoto' => 'MAT_' . Str::random(),
-            'role_id' => $request->role_id,
-        ],200);
-        return new UserResource($user);
+            'role_id' => $request->role_id]);
+
+        $user = User::create($ajout);
+        if ($user !== null) {
+            return new UserResource($user);
+
+        }
+        return response()->json([
+            "message" => "error lors de l'insertion du user"], 401);
 
     }
 
@@ -59,17 +64,13 @@ class UserController extends Controller
     public function update(UserRequest $request, User $user)
     {
         //
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
-            'telephone' => $request->telephone,
-            'is_enable' => true,
-            'etatLivreur' => true,
-            'matriculeMoto' => 'MAT_' . Str::random(),
-            'role_id' => $request->role_id,
-        ],200);
-        return new UserResource($user);
+        $user->update($request->validated());
+        if ($user !== null) {
+            return new UserResource($user);
+
+        }
+        return response()->json([
+            "message" => "error lors de l'insertion de user"], 401);
     }
 
     /**

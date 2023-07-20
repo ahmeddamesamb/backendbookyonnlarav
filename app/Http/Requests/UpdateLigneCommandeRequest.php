@@ -11,7 +11,7 @@ class UpdateLigneCommandeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,6 +23,13 @@ class UpdateLigneCommandeRequest extends FormRequest
     {
         return [
             //
+            'etatCommande'=>'required|string',
+            'numeroCommande'=>'required|string',
+            'statutCommande'=>'required|string',
+            'paiement'=>'required|integer',
+            'user_id'=>'required',
+            'zone_id'=>'required',
+            'lignCommande_id'=>'required',
         ];
     }
 }

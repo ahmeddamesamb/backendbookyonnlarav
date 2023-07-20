@@ -11,7 +11,7 @@ class LivraisonRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,6 +23,9 @@ class LivraisonRequest extends FormRequest
     {
         return [
             //
+            'telephoneLivraison'=>'required|string',
+            'etatLivraison'=>'required|string',
+            'zone_id'=>'required',
         ];
     }
 }

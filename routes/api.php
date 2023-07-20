@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ZoneController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,17 +19,15 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [
     AuthController::class, 'login',
 ]);
-Route::apiResource('/user',
-    UserController::class, );
-Route::apiResource('/commande',
-    CommandeController::class, );
-Route::apiResource('/livraison',
-    LivraisonController::class, );
-Route::apiResource('/livraison',
-    ZoneController::class, );
-Route::apiResource('/catalogue',
-    CatalogueController::class, );
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 
 });
+Route::apiResources([
+    'users' => UserController::class,
+    'commandes' => CommandeController::class,
+    'livraisons' => LivraisonController::class,
+    'zones' => ZoneController::class,
+    'catalogues' => CatalogueController::class,
+]);

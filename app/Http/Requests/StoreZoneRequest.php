@@ -11,9 +11,8 @@ class StoreZoneRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -23,6 +22,10 @@ class StoreZoneRequest extends FormRequest
     {
         return [
             //
+            'nom'=>'required|string',
+            'coutLivraison'=>'required|integer',
+            'etatZone'=>'required|string',
+
         ];
     }
 }

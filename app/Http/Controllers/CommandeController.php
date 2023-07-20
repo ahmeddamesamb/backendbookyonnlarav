@@ -14,11 +14,15 @@ class CommandeController extends Controller
     {
         //
         $commande = Commande::all();
-        return response()->json([
-            'commande' => $commande,
-            "message" => "livrcommandeaison recuperer  avec succes",
+        if ($commande !== null) {
+            return response()->json([
+                'commande' => CommandeResource::collection($commande),
+                "message" => "commande recuperer  avec succes",
 
-        ], 200);
+            ], 200);
+        }
+        return response()->json([
+            "message" => "error lors de la recuperation commande"], 401);
 
     }
 
@@ -28,16 +32,13 @@ class CommandeController extends Controller
     public function store(CommandeRequest $request)
     {
         //
-        $commande = Commande::create([
-            'etatCommande' => $this->etatCommande,
-            'numeroCommande' => $this->numeroCommande,
-            'statutCommande' => $this->statutCommande,
-            'paiement' => $this->paiement,
-            'user_id' => $this->user_id,
-            'zone_id' => $this->zone_id,
-            'lignCommande_id' => $this->lignCommande_id,
-        ], 200);
-        return new StoreZoneRequest($commande);
+        $commande = Commande::create($request->validated());
+        if ($commande !== null) {
+            return new CommandeResource($commande);
+
+        }
+        return response()->json([
+            "message" => "error lors l'insertion de la commande"], 401);
     }
 
     /**
@@ -56,17 +57,13 @@ class CommandeController extends Controller
     public function update(CommandeResource $request, Commande $commande)
     {
         //
-        $commande->update([
-            'etatCommande' => $this->etatCommande,
-            'numeroCommande' => $this->numeroCommande,
-            'statutCommande' => $this->statutCommande,
-            'paiement' => $this->paiement,
-            'user_id' => $this->user_id,
-            'zone_id' => $this->zone_id,
-            'lignCommande_id' => $this->lignCommande_id,
-        ], 200);
-        return new CommandeResource($commande);
+        $commande->update($request->validated());
+        if ($commande !== null) {
+            return new CommandeResource($commande);
 
+        }
+        return response()->json([
+            "message" => "error lors de la mise a jours de la commande"], 401);
     }
 
     /**
