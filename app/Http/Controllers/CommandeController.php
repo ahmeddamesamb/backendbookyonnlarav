@@ -14,7 +14,11 @@ class CommandeController extends Controller
     {
         //
         $commande = Commande::all();
-        return response()->json($commande);
+        return response()->json([
+            'commande' => $commande,
+            "message" => "livrcommandeaison recuperer  avec succes",
+
+        ], 200);
 
     }
 
@@ -32,7 +36,7 @@ class CommandeController extends Controller
             'user_id' => $this->user_id,
             'zone_id' => $this->zone_id,
             'lignCommande_id' => $this->lignCommande_id,
-        ]);
+        ], 200);
         return new StoreZoneRequest($commande);
     }
 
@@ -60,7 +64,7 @@ class CommandeController extends Controller
             'user_id' => $this->user_id,
             'zone_id' => $this->zone_id,
             'lignCommande_id' => $this->lignCommande_id,
-        ]);
+        ], 200);
         return new CommandeResource($commande);
 
     }

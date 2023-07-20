@@ -14,7 +14,11 @@ class LivraisonController extends Controller
     {
         //
         $livraison = Zone::all();
-        return response()->json($livraison);
+        return response()->json([
+            'livraison' => $livraison,
+            "message" => "livraison recuperer  avec succes",
+
+        ],200);
 
     }
 
@@ -28,7 +32,7 @@ class LivraisonController extends Controller
             'telephoneLivraison' => $this->telephoneLivraison,
             'etatLivraison' => $this->etatLivraison,
             'zone_id' => $this->zoneId,
-        ]);
+        ],200);
         return new LivraisonRequest($livraison);
 
     }
@@ -53,7 +57,7 @@ class LivraisonController extends Controller
             'telephoneLivraison' => $this->telephoneLivraison,
             'etatLivraison' => $this->etatLivraison,
             'zone_id' => $this->zoneId,
-        ]);
+        ],200);
         return new LivraisonResource($livraison);
 
     }

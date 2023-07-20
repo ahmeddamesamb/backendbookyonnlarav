@@ -17,7 +17,11 @@ class UserController extends Controller
     {
         //
         $user = User::all();
-        return response()->json($user);
+        return response()->json([
+            'user' => $user,
+            "message" => "user recuperer  avec succes",
+
+        ], 200);
     }
 
     /**
@@ -35,7 +39,7 @@ class UserController extends Controller
             'etatLivreur' => true,
             'matriculeMoto' => 'MAT_' . Str::random(),
             'role_id' => $request->role_id,
-        ]);
+        ],200);
         return new UserResource($user);
 
     }
@@ -64,7 +68,7 @@ class UserController extends Controller
             'etatLivreur' => true,
             'matriculeMoto' => 'MAT_' . Str::random(),
             'role_id' => $request->role_id,
-        ]);
+        ],200);
         return new UserResource($user);
     }
 

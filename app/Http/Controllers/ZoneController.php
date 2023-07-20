@@ -17,7 +17,11 @@ class ZoneController extends Controller
         //
 //
         $zone = Zone::all();
-        return response()->json($zone);
+        return response()->json([
+            'zone' => $zone,
+            "message" => "zone recuperer  avec succes",
+
+        ],200);
 
     }
 
@@ -31,7 +35,7 @@ class ZoneController extends Controller
             'nom' => $request->nom,
             'coutLivraison' => $request->coutLivraison,
             'etatZone' => $request->etatZone,
-        ]);
+        ], 200);
         return new StoreZoneRequest($zone);
     }
 
@@ -55,7 +59,7 @@ class ZoneController extends Controller
             'nom' => $request->nom,
             'coutLivraison' => $request->coutLivraison,
             'etatZone' => $request->etatZone,
-        ]);
+        ], 200);
         return new UserResource($zone);
 
     }

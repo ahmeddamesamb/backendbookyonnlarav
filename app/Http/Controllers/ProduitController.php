@@ -14,7 +14,13 @@ class ProduitController extends Controller
     {
         //
         $produit = Produit::all();
-        return response()->json($produit);
+        return response()->json(
+
+            [
+                'produit' => $produit,
+                "message" => "produit recuperer  avec succes",
+
+            ], 200);
 
     }
 
@@ -34,7 +40,8 @@ class ProduitController extends Controller
             'quantiteStock' => $this->quantiteStock,
             'lignCommande_id' => $this->lignCommande_id,
             'user_id' => $this->user_id,
-        ]);
+
+        ], 200);
         return new ProduitRequest($produit);
 
     }
@@ -65,7 +72,7 @@ class ProduitController extends Controller
             'quantiteStock' => $this->quantiteStock,
             'lignCommande_id' => $this->lignCommande_id,
             'user_id' => $this->user_id,
-        ]);
+        ], 200);
         return new ProduitResource($produit);
 
     }

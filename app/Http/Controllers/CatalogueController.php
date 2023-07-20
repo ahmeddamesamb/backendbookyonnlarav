@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Catalogue;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCatalogueRequest;
 use App\Http\Requests\UpdateCatalogueRequest;
+use App\Models\Catalogue;
 
 class CatalogueController extends Controller
 {
